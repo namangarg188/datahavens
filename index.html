@@ -21,24 +21,25 @@
     .tab{appearance:none;border:1px solid rgba(255,255,255,.15);background:#0d4c45;color:#e2fffb;padding:10px 14px;border-radius:12px;cursor:pointer;text-decoration:none;transition:all .2s ease}
     .tab:hover{transform:translateY(-1px);background:#0f5b53}
     .tab.active{background:#0aa7a7;color:#083433;font-weight:700;box-shadow:0 8px 18px rgba(0,0,0,.15)}
-    main{padding:16px;max-width:960px;margin:0 auto}
-    .card{background:var(--card);border-radius:16px;padding:18px;margin:12px 0;box-shadow:0 10px 28px rgba(0,0,0,.10);transition:transform .2s ease, box-shadow .2s ease}
+    main{padding:20px;max-width:1280px;margin:0 auto}
+    .card{background:var(--card);border-radius:18px;padding:24px;margin:16px 0;box-shadow:0 12px 30px rgba(0,0,0,.12);transition:transform .2s ease, box-shadow .2s ease}
     .card:hover{transform:translateY(-1px);box-shadow:0 14px 36px rgba(0,0,0,.12)}
     .muted{color:var(--muted)}
     .hidden{display:none}
     .field{display:flex;flex-direction:column;gap:6px;margin:10px 0}
     .field.inline{flex-direction:row;align-items:center;gap:8px}
-    .field input,.field textarea,.field select{padding:10px 12px;border:1px solid var(--border);border-radius:10px;font-size:14px}
+    .field input,.field textarea,.field select{padding:14px 14px;border:1px solid var(--border);border-radius:12px;font-size:16px}
     .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-    .btn{appearance:none;border:1px solid #cfe9e6;background:#e7f7f6;color:#0a3a37;padding:10px 14px;border-radius:12px;cursor:pointer;text-decoration:none;display:inline-block;transition:all .2s ease}
+    .btn{appearance:none;border:1px solid #cfe9e6;background:#e7f7f6;color:#0a3a37;padding:12px 18px;border-radius:14px;cursor:pointer;text-decoration:none;display:inline-block;transition:all .2s ease;font-size:16px}
     .btn:hover{transform:translateY(-1px)}
     .btn.primary{background:var(--primary);border-color:transparent;color:white;box-shadow:0 6px 16px rgba(14,165,165,.35)}
     .btn.primary:hover{filter:brightness(1.03)}
     .btn.primary:active{background:var(--primary-600)}
     .btn:disabled{opacity:.6;cursor:not-allowed}
-    .quiz-meta{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;color:#374151}
-    .options{display:grid;gap:10px}
-    .option{border:1px solid var(--border);border-radius:12px;padding:12px;display:flex;align-items:center;gap:10px;cursor:pointer;transition:all .15s ease}
+    .quiz-meta{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;color:#374151;font-size:16px}
+    .options{display:grid;gap:14px}
+    .option{border:1px solid var(--border);border-radius:14px;padding:16px;display:flex;align-items:center;gap:12px;cursor:pointer;transition:all .15s ease}
+    .option span{font-size:17px}
     .option:hover{background:var(--primary-100)}
     .option input{margin:0}
     .option.correct{outline:2px solid #16a34a}
@@ -48,12 +49,20 @@
     .pill{display:inline-block;background:var(--pill);color:#0a3a37;border:1px solid #cce9e6;padding:6px 10px;border-radius:999px;font-size:12px}
     .list{list-style:none;margin:0;padding:0}
     .list li{padding:10px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;gap:10px}
-    .progress{height:8px;background:#eef5f4;border-radius:999px;overflow:hidden;margin:8px 0 4px}
+    .progress{height:10px;background:#eef5f4;border-radius:999px;overflow:hidden;margin:10px 0 6px}
     .progress > .bar{height:100%;width:0;background:linear-gradient(90deg,#10b981,#06b6d4);transition:width .25s ease}
+    /* Show only active section */
+    .tab-panel{display:none}
+    .tab-panel.active{display:block}
     .app-footer{color:#d2fffb;display:flex;gap:8px;align-items:center;justify-content:center;padding:18px}
     .app-footer a{color:#d2fffb}
     .dot{opacity:.6}
-    @media (max-width:640px){.grid-2{grid-template-columns:1fr}}
+    #question-text{font-size:22px;line-height:1.35;margin:8px 0 6px}
+    @media (max-width:640px){
+      .grid-2{grid-template-columns:1fr}
+      .btn{width:100%}
+      #question-text{font-size:20px}
+    }
   </style>
 </head>
 <body>
@@ -234,6 +243,10 @@
     panels.forEach(p=>p.classList.remove('active'));
     const panel=document.getElementById(`tab-${id}`);
     if (panel) panel.classList.add('active');
+    // update document title and scroll to top for focus
+    const titles={quiz:'Quiz', add:'Add Question', leaderboard:'Leaderboard', admin:'Admin'};
+    document.title = `DataHaven • ${titles[id]||'App'}`;
+    window.scrollTo({top:0, behavior:'smooth'});
     if(id==='leaderboard') renderLeaderboard();
     if(id==='add') refreshYourAdditions();
     if(id==='admin') renderAdminList();
